@@ -19,8 +19,6 @@ async function run() {
     const eventName = payload.inputs.eventName;
     const handlerPayload = JSON.parse(payload.inputs.payload);
 
-    console.log(handlerPayload);
-
     if (eventName === "issueClosed") {
       const result: string = await issueClosed(
         handlerPayload.issue,
