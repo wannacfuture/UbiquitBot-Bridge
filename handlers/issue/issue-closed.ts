@@ -8,7 +8,7 @@ export const botCommandsAndHumanCommentsFilter = (comment: Comment) =>
 
 const botCommentsFilter = (comment: Comment) => comment.user.type === "Bot"; /* No Humans */
 
-export async function issueClosed(issue, issueComments, openAi, repoCollaborators, pullRequestComments, config) {
+export async function issueClosed(issue, issueComments, openAi, repoCollaborators, pullRequestComments, config, X25519_PRIVATE_KEY) {
   const sourceScores = await aggregateAndScoreContributions({
     issue,
     issueComments,
@@ -19,7 +19,7 @@ export async function issueClosed(issue, issueComments, openAi, repoCollaborator
   // 2. sum total scores will sum the scores of every contribution, and organize them by contributor
   const contributorTotalScores = sumTotalScores(sourceScores);
   // 3. generate permits will generate a payment for every contributor
-  const permitComment = await generatePermits(contributorTotalScores, issue, config);
+  const permitComment = await generatePermits(contributorTotalScores, issue, config, X25519_PRIVATE_KEY);
   // 4. return the permit comment
   return permitComment;
 }

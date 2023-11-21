@@ -6,6 +6,8 @@
     "@sinclair/typebox": "^0.31.20",
     "@supabase/supabase-js": "^2.38.4",
     "@uniswap/permit2-sdk": "^1.2.0",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
     "decimal.js": "^10.4.3",
     "ethers": "^5.7.2",
     "js-tiktoken": "^1.0.7",

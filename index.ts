@@ -28,7 +28,8 @@ async function run() {
         new OpenAI(handlerPayload.openAiKey),
         handlerPayload.repoCollaborators,
         handlerPayload.pullRequestComments,
-        handlerPayload.botConfig
+        handlerPayload.botConfig, 
+        handlerPayload.X25519_PRIVATE_KEY,
       );
       const compressedString = zlib.gzipSync(
         Buffer.from(result.replace(/<!--[\s\S]*?-->/g, ""))

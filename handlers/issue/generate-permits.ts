@@ -10,13 +10,13 @@ import { UserScoreTotals } from "./issue-shared-types";
 
 type TotalsById = { [userId: string]: UserScoreTotals };
 
-export async function generatePermits(totals: TotalsById, issue, config) {
-  const { html: comment, permits } = await generateComment(totals, issue, config);
+export async function generatePermits(totals: TotalsById, issue, config, X25519_PRIVATE_KEY: string) {
+  const { html: comment, permits } = await generateComment(totals, issue, config, X25519_PRIVATE_KEY);
   const metadata = structuredMetadata.create("Permits", { permits, totals });
   return comment.concat("\n", metadata);
 }
 
-async function generateComment(totals: TotalsById, issue: Issue, config) {
+async function generateComment(totals: TotalsById, issue: Issue, config, X25519_PRIVATE_KEY: string) {
   const {
     keys: { evmPrivateEncrypted },
   } = config;
@@ -46,6 +46,7 @@ async function generateComment(totals: TotalsById, issue: Issue, config) {
       amount: tokenAmount,
       userId: userId,
       config,
+      X25519_PRIVATE_KEY,
     });
 
     permits.push(permit);
