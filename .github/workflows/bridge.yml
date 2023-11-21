@@ -33,8 +33,6 @@ jobs:
       - name: Calling action
         uses: ./ # Uses an action in the root directory
         id: Ubiquity_action
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       - name: Trigger repository_dispatch to the repo
         run: |
           curl -L \
