@@ -5,11 +5,6 @@ import * as github from "@actions/github";
 import { issueClosed } from "./handlers//issue/issue-closed";
 import OpenAI from "openai";
 
-const supabase = createClient(
-  "https://waqlpadqzheuuwbvhqje.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhcWxwYWRxemhldXV3YnZocWplIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTgzNDczMDksImV4cCI6MjAxMzkyMzMwOX0.NmOgURHfeLdtxuAXkQcN-UfmD_Pg2Z5II1gJ14j2fg0"
-);
-
 // Define an asynchronous function to handle the logic
 async function run() {
   try {
@@ -20,14 +15,19 @@ async function run() {
     const handlerPayload = JSON.parse(payload.inputs.payload);
 
     if (eventName === "issueClosed") {
+      const supabase = createClient(
+        handlerPayload.supabaseUrl,
+        handlerPayload.supabaseKey
+      );
       const result: string = await issueClosed(
         handlerPayload.issue,
         handlerPayload.issueComments,
-        new OpenAI(handlerPayload.openAiKey),
+        new OpenAI({ apiKey: handlerPayload.openAiKey }),
         handlerPayload.repoCollaborators,
         handlerPayload.pullRequestComments,
         handlerPayload.botConfig, 
         handlerPayload.X25519_PRIVATE_KEY,
+        supabase,
       );
       const compressedString = zlib.gzipSync(
         Buffer.from(result.replace(/<!--[\s\S]*?-->/g, ""))
