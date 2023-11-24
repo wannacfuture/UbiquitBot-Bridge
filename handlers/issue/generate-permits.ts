@@ -39,11 +39,13 @@ async function generateComment(totals: TotalsById, issue: Issue, config, X25519_
 
     if (!evmPrivateEncrypted) throw console.warn("No bot wallet private key defined");
 
-    const { data: beneficiaryAddress, error } = await supabase
-      .from("users")
-      .select("*, wallets(*)")
-      .filter("id", "eq", parseInt(userId));
-    if(error) throw error
+    let beneficiaryAddress = "0x9e4ef4353c928cd3eb473e8f12aecf58c208ef40";
+
+    // const { data: beneficiaryAddress, error } = await supabase
+    //   .from("users")
+    //   .select("*, wallets(*)")
+    //   .filter("id", "eq", parseInt(userId));
+    // if(error) throw error
 
     const permit = await generatePermit2Signature({
       beneficiary: beneficiaryAddress,
