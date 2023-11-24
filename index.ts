@@ -32,7 +32,6 @@ async function run() {
       const compressedString = zlib.gzipSync(
         Buffer.from(result.replace(/<!--[\s\S]*?-->/g, ""))
       );
-      console.log(compressedString);
       core.setOutput("result", {
         comment: compressedString.toJSON(),
       });
